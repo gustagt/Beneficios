@@ -120,21 +120,35 @@
             </div>
 
             <div>
-                <label for="nome">Email: </label>
-                <input type="text">
+                <label for="email">Email <span>*</span></label>
+                <br>
+                <input type="email" id="email">
             </div>
-            <label for="nome">Representante Legal: </label>
-            <br>
-            <input type="radio" id="sim" name="Rep_Legal" value="sim">
-            <label for="sim">Sim</label>
-            <input type="radio" id="nao" name="Rep_Legal" value="nao">
-            <label for="nao">Não</label>
-            <br>
-            <label for="nome">Nome do Representante legal: </label>
-            <input type="text">
-            <label for="nome">Documento rep. legal: </label>
-            <input type="file">
-            <br>
+
+            <div>
+                <label for="">Representante Legal? <span>*</span></label>
+                <br>
+                <input type="radio" id="sim" name="Rep_Legal" value="sim">
+                <label for="sim" style="margin-right: 33px;">Sim</label>
+                <input type="radio" id="nao" name="Rep_Legal" value="nao">
+                <label for="nao">Não</label>
+            </div>
+
+            <div>
+                <div style="display: inline-block;">
+                    <label for="nResponsavel">Nome do Representante legal <span>*</span></label>
+                    <br>
+                    <input type="text" id="nResponsavel">
+                </div>
+                <div style="display: inline-block;">
+                    <label for="dResponsavel">Documento rep. legal <span>*</span></label>
+                    <br>
+                    <input type="file" id="dResponsavel" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
+                    <br>
+                    <span>Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
+                </div>
+            </div>
+            
             <label for="nome">Comprovante de residência do mês vigente ou anterior ou Declaração por escrito atestando a
                 veracidade das informações,
                 acompanhada de correspondência em nome de terceiro. * </label>
