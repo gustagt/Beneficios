@@ -84,6 +84,7 @@ input {
 
 #dtNascimento {
     width: 327px;
+    padding-right: 5px;
 }
 
 #sexo {
@@ -138,14 +139,25 @@ input[type=radio] {
 }
 
 #nResponsavel {
-    width: 600px;
+    width: 530px;
 }
 
 input[type="file"] {
-    display: none;
+    padding-top: 5px;
+    padding-right: 7px;
 }
 
+#dResponsavel{
+    margin-bottom: 0;
+}
 
+#cpResidencia{
+    margin-bottom: 0;
+}
+
+#dcOfFoto{
+    margin-bottom: 0;
+}
 
 .btnFile {
     width: 134px;
@@ -186,10 +198,20 @@ button {
     border-radius: 20px;
 }
 
+#dAcordo{
+    width: 20px;
+    width: 20px;
+    
+}
+
 .boxBtn{
     width: 163px;
     height: 41px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 80px;
+}
+
+select{
+    border-color: #EAEAEA;
 }
