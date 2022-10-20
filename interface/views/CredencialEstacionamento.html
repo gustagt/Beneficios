@@ -22,42 +22,44 @@
         </div>
         <div style="height: 131px; width: 179px;"></div>
     </div>
-    <div class="subtitulo">
+    <div class="subtitulo_cima">
         <h2>Protocolo n°: 00000</h2>
     </div>
-    <div class="subtitulo">
+    <div class="subtitulo_baixo">
         <h2>Status da Emissão</h2>
     </div>
-    <div class="stepper-wrapper">
+    <div id="Barra_Processo" class="stepper-wrapper">
         <div class="stepper-item completed">
-            <div class="step-counter">1</div>
-            <div class="step-name">Em analise - 27/09/22 - 14:22</div>
+            <div class="step-counter"><b>1</b></div>
+            <div class="step-name">Em análise<br>27/09/2022</div>
         </div>
-        <div class="stepper-item failed-doc">
-            <div class="stepper-item completed-doc">
-                <div class="step-counter">2</div>
-                <div class="step-name">Documentação pendente</div>
+        <!-steppter-item failed-doc - FALTA DOCUMENTO ->
+            <div class="stepper-item completed ">
+
+                <div class="step-counter"><b>2</b></div>
+                <div class="step-name">Documentação pendente<br>29/09/2022</div>
+
             </div>
-        </div>
-        <div class="stepper-item active">
-            <div class="step-counter">3</div>
-            <div class="step-name">Em produção</div>
-        </div>
-        <div class="stepper-item">
-            <div class="step-counter">4</div>
-            <div class="step-name">Forth</div>
-        </div>
-        <div class="stepper-item">
-            <div class="step-counter">5</div>
-            <div class="step-name">Five</div>
-        </div>
+            <div class="stepper-item  completed">
+                <div class="step-counter"><b>3</b></div>
+                <div class="step-name">Em produção<br>30/09/2022</div>
+            </div>
+            <div class="stepper-item completed ">
+                <div class="step-counter"><b>4</b></div>
+                <div class="step-name">Enviado<br>31/09/2022</div>
+            </div>
+            <div class="stepper-item completed">
+                <div class="step-counter"><b>5</b></div>
+                <div class="step-name">Entregue<br>01/10/2022</div>
+            </div>
     </div>
-    <div class="container text-center">
-        <label for="cpResidencia" class="btnFile">Anexar arquivo</label>
-        <input type="file" id="cpResidencia">
-        <br>
-        <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
-    </div>
+    <!-IRÁ APARECER APENAS QUANDO O STATUS FOR FALTA DOCUMENTO ->
+        <div id="Anexo" class="container text-center">
+            <label for="cpResidencia" class="btnFile">Anexar arquivo</label>
+            <input type="file" id="cpResidencia">
+            <br>
+            <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
+        </div>
 </body>
 
 </html>

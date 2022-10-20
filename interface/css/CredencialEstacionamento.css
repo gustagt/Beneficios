@@ -1,9 +1,14 @@
-.subtitulo {
+.subtitulo_cima {
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.subtitulo_baixo {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
 h2 {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -254,14 +259,14 @@ button {
 }
 
 .stepper-item.failed-doc .step-counter {
-    background-color: green;
+  background-color: red;
 }
 
 .stepper-item.failed-doc::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #4bb543;
-  width: 100%;
+  border-bottom: 2px solid red;
+  width: 0%;
   top: 20px;
   left: 50%;
   z-index: 3;
@@ -292,4 +297,15 @@ button {
 }
 .stepper-item:last-child::after {
   content: none;
+}
+
+.step-name {
+  text-align: center;
+}
+
+#Barra_Processo {
+  margin-top: 40px;
+}
+#Anexo {
+  margin-top: 30px;
 }
