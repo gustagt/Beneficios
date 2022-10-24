@@ -6,7 +6,6 @@ from json import dumps
 db_connect = create_engine('sqlite:///exemplo.db')
 app = Flask(__name__)
 api = Api(app)
-db_connect.connect().execute("CREATE TABLE user ( ID int PRIMARY KEY, name varchar(255), email varchar(255))")
 
 class Users(Resource):
     def get(self):
