@@ -9,7 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/FCredencialIdoso.css">
+    <link rel="stylesheet" href="/css/Formularios.css">
+    
 </head>
 
 <body>
@@ -64,7 +65,7 @@
             <div style="display: inline-block; margin-right: 20px;">
                 <label for="dtNascimento">Data de Nascimento <span>*</span></label>
                 <br>
-                <input type="text" id="dtNascimento">
+                <input type="date" id="dtNascimento">
             </div>
             <div style="display: inline-block;">
                 <label for="sexo">Sexo <span>*</span></label>
@@ -111,12 +112,12 @@
             <div style="display: inline-block; margin-right: 20px;">
                 <label for="telefone">Telefone</label>
                 <br>
-                <input type="text" id="telefone">
+                <input type="tel" id="telefone">
             </div>
             <div style="display: inline-block;">
                 <label for="celular">Celular <span>*</span></label>
                 <br>
-                <input type="text" id="celular">
+                <input type="tel" id="celular">
             </div>
 
             <div>
@@ -128,9 +129,9 @@
             <div>
                 <label for="">Representante Legal? <span>*</span></label>
                 <br>
-                <input type="radio" id="sim" name="Rep_Legal" value="sim" data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                <input type="radio" id="sim" name="Rep_Legal" value="sim" data-bs-toggle="collapse" data-bs-target="#collapseExample:not(.show)">
                 <label for="sim" style="margin-right: 33px;">Sim</label>
-                <input type="radio" id="nao" name="Rep_Legal" value="nao" data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                <input type="radio" id="nao" name="Rep_Legal" value="nao" data-bs-toggle="collapse" data-bs-target="#collapseExample.show">
                 <label for="nao">Não</label>
             </div>
 
@@ -143,29 +144,26 @@
                 <div style="display: inline-block;">
                     <label for="dResponsavel">Documento rep. legal <span>*</span></label>
                     <br>
-                    <label for="dResponsavel" class="btnFile">Anexar arquivo</label>
                     <input type="file" id="dResponsavel" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
                     <br>
                     <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
                 </div>
             </div>
 
-            <div>
+            <div style="margin-bottom: 10px;">
                 <label for="cpResidencia">Comprovante de residência do mês vigente ou anterior ou Declaração por escrito
                     atestando a
                     veracidade das informações,
                     acompanhada de correspondência em nome de terceiro. <span>*</span></label>
-                <label for="cpResidencia" class="btnFile">Anexar arquivo</label>
-                <input type="file" id="cpResidencia">
+                <input type="file" id="cpResidencia" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
 
-            <div>
+            <div style="margin-bottom: 10px;">
                 <label for="dcOfFoto">Documento oficial com foto <span>*</span></label>
                 <br>
-                <label for="dcOfFoto" class="btnFile">Anexar arquivo</label>
-                <input type="file" id="dcOfFoto">
+                <input type="file" id="dcOfFoto" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
