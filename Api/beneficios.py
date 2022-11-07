@@ -1,4 +1,3 @@
-from dao import db_beneficiarios as bnf
+from models import beneficiario
 
-bnf.listAll()
 
