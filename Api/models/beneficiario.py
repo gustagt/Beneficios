@@ -1,17 +1,11 @@
-from datetime import datetime
-from typing import Any
 import db_connect
 import pandas as pd
-import datetime
 
 conn = db_connect.db_connect
+
 tabBeneficiarios = 'beneficiarios'
-tabDeficiente = 'deficiente'
-tabIdoso = 'idoso'
-tabProtocolo = 'protocolo'
 
-
-class beneficiario:
+class Beneficiario:
     def __init__(self, cpf, nome, dataNascimento, endereco, celular, rg, email, cDocumentos, telefone="NULL", dataObito="NULL", repLegal="NULL") -> None:
         self.cpf = cpf
         self.nome = nome
@@ -71,7 +65,4 @@ class beneficiario:
         return selecao
 
 
-date = datetime.date(2009, 5, 5)
-ben = beneficiario(15445468455, 'gustavit', date, 'teste', 9533, 16533,
-                   'teste.testeds24454a', 'caminho', repLegal='osnildo', telefone=45531)
-print(beneficiario.deleteByCpf(15444))
+

@@ -1,16 +1,13 @@
-from datetime import datetime
-from typing import Any
 import db_connect
 import pandas as pd
-import datetime
 
 conn = db_connect.db_connect
 
 tabIdoso = 'idoso'
 
-class idoso:
+class Idoso:
     def __init__(self, ocupacao, beneficiarioCpf, nCredencial="NULL", dataEmissao="NULL", dataValidade="NULL", segundaVia="NULL", terceiraVia="NULL", primeiroRecadastro="NULL",segundoRecadastro="NULL",terceiroRecadastro="NULL", observacoes="NULL",) -> None:
-        self.Credencial = nCredencial
+        self.nCredencial = nCredencial
         self.ocupacao = ocupacao
         self.beneficiarioCpf = beneficiarioCpf
         self.dataEmissao = dataEmissao
