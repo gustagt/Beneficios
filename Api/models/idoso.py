@@ -1,8 +1,5 @@
-from datetime import datetime
-from typing import Any
 import db_connect
 import pandas as pd
-import datetime
 
 conn = db_connect.db_connect
 
