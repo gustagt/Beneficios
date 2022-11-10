@@ -27,6 +27,7 @@ def teste():
 # Rota /devs -> LISTAR todos os desenvolvedores cadastrados
 @app.route('/beneficiarios/add', methods=['POST'])
 def addBeneficiarios():
+    
     cpf = request.form['cpf']
     nome = request.form['nome']
     dataNascimento = request.form['dataNascimento']
@@ -42,6 +43,7 @@ def addBeneficiarios():
     bairro = request.form['bairro']
     cidade = request.form['cidade']
     arquivo = request.files['arquivo']
+    
     
     endereco = rua + ' ' + num + ' ' + complemento + " " + bairro + " " + cidade + ' ' + cep
 
