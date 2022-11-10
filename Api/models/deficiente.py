@@ -31,6 +31,27 @@ class Deficiente:
         if self.observacoes != "NULL":
             self.observacoes = '\''+self.observacoes+"\'"
 
+        if self.dataEmissao != "NULL":
+            self.dataEmissao = '\''+self.dataEmissao+"\'"
+
+        if self.dataValidade != "NULL":
+            self.dataValidade = '\''+self.dataValidade+"\'"
+
+        if self.segundaVia != "NULL":
+            self.segundaVia = '\''+self.segundaVia+"\'"
+
+        if self.terceiraVia != "NULL":
+            self.terceiraVia = '\''+self.terceiraVia+"\'"
+
+        if self.primeiroRecadastro != "NULL":
+            self.primeiroRecadastro = '\''+self.primeiroRecadastro+"\'"
+
+        if self.segundoRecadastro != "NULL":
+            self.segundoRecadastro = '\''+self.segundoRecadastro+"\'"
+
+        if self.terceiroRecadastro != "NULL":
+            self.terceiroRecadastro = '\''+self.terceiroRecadastro+"\'"
+
         conn.execute(
             'INSERT INTO {0} (n_credencial, deficiencia, tipo_deficiencia, ocupacao, data_emissao, data_validade, segunda_via, terceira_via, primeiro_recadastro, segundo_recadastro, terceiro_recadastro, observacoes, beneficiarios_cpf) VALUES ({1},\'{2}\',\'{3}\',\'{4}\',{5},{6},{7},{8},{9},{10},{11},{12},{13})'.format(
                 tabDeficiente, self.nCredencial, self.deficiencia, self.tipoDeficiencia, self.ocupacao, self.dataEmissao, self.dataValidade, self.segundaVia, self.terceiraVia, self.primeiroRecadastro, self.segundoRecadastro, self.terceiroRecadastro, self.observacoes, self.beneficiarioCpf))
@@ -69,6 +90,3 @@ class Deficiente:
         return selecao
     
     
-
-des = deficiente('fisica','irreversivel', 'motorista', 1544544)
-print(deficiente.deleteByCpf(1544544))
