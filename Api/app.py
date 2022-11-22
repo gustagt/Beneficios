@@ -5,17 +5,19 @@ from werkzeug.utils import secure_filename
 import os
 
 
-
 app = Flask(__name__)
 app.secret_key = 'gusta'
 
 caminhoDocumentos = 'C:/Users/0103250/Documents/Beneficios/Api/documentos/'
 
 # Rota /devs -> LISTAR todos os desenvolvedores cadastrados
+
+
 @app.route('/beneficiarios', methods=['GET'])
 def beneficiarios():
     beneficiarios = bn.Beneficiario.listAll().to_json(orient='index')
     return beneficiarios, 200
+
 
 @app.route('/', methods=['POST'])
 def teste():
@@ -26,9 +28,11 @@ def teste():
     
 
 # Rota /devs -> LISTAR todos os desenvolvedores cadastrados
+
+
 @app.route('/beneficiarios/add', methods=['POST'])
 def addBeneficiarios():
-    
+    # Check dos dados
     cpf = request.form['cpf']
     nome = request.form['nome']
     dataNascimento = request.form['dataNascimento']
@@ -52,7 +56,11 @@ def addBeneficiarios():
     
     endereco = rua + ' ' + num + ' ' + complemento + " " + bairro + " " + cidade + ' ' + cep
 
-    beneficiario = bn.Beneficiario(cpf,nome,dataNascimento,endereco,celular,rg,email, genero)
+    endereco = rua + ' ' + num + ' ' + complemento + \
+        " " + bairro + " " + cidade + ' ' + cep
+
+    beneficiario = bn.Beneficiario(
+        cpf, nome, dataNascimento, endereco, celular, rg, email, genero)
     retorno = beneficiario.add().to_json(orient="index")
     
     cpResidencia = request.files['cpResidencia']
