@@ -1,4 +1,4 @@
-import db_connect
+from models import db_connect
 import pandas as pd
 
 conn = db_connect.db_connect
@@ -6,10 +6,9 @@ conn = db_connect.db_connect
 tabIdoso = 'idoso'
 
 
-class idoso:
-    def __init__(self, ocupacao, beneficiarioCpf, nCredencial="NULL", dataEmissao="NULL", dataValidade="NULL", segundaVia="NULL", terceiraVia="NULL", primeiroRecadastro="NULL", segundoRecadastro="NULL", terceiroRecadastro="NULL", observacoes="NULL",) -> None:
+class Idoso:
+    def __init__(self, beneficiarioCpf, nCredencial="NULL", dataEmissao="NULL", dataValidade="NULL", segundaVia="NULL", terceiraVia="NULL", primeiroRecadastro="NULL", segundoRecadastro="NULL", terceiroRecadastro="NULL", observacoes="NULL",) -> None:
         self.nCredencial = nCredencial
-        self.ocupacao = ocupacao
         self.beneficiarioCpf = beneficiarioCpf
         self.dataEmissao = dataEmissao
         self.dataValidade = dataValidade
@@ -52,8 +51,8 @@ class idoso:
             self.terceiroRecadastro = '\''+self.terceiroRecadastro+"\'"
 
         conn.execute(
-            'INSERT INTO {0} (n_credencial, ocupacao, data_emissao, data_validade, segunda_via, terceira_via, primeiro_recadastro, segundo_recadastro, terceiro_recadastro, observacoes, beneficiarios_cpf) VALUES ({1},\'{2}\',{3},{4},{5},{6},{7},{8},{9},{10},{11})'.format(
-                tabIdoso, self.nCredencial, self.ocupacao, self.dataEmissao, self.dataValidade, self.segundaVia, self.terceiraVia, self.primeiroRecadastro, self.segundoRecadastro, self.terceiroRecadastro, self.observacoes, self.beneficiarioCpf))
+            'INSERT INTO {0} (n_credencial, data_emissao, data_validade, segunda_via, terceira_via, primeiro_recadastro, segundo_recadastro, terceiro_recadastro, observacoes, beneficiarios_cpf) VALUES ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10})'.format(
+                tabIdoso, self.nCredencial, self.dataEmissao, self.dataValidade, self.segundaVia, self.terceiraVia, self.primeiroRecadastro, self.segundoRecadastro, self.terceiroRecadastro, self.observacoes, self.beneficiarioCpf))
 
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE beneficiarios_cpf={1}".format(tabIdoso, self.beneficiarioCpf), conn)
@@ -75,8 +74,8 @@ class idoso:
             self.observacoes = '\''+self.observacoes+"\'"
 
         conn.execute(
-            'UPDATE {0} SET ocupacao=\'{1}\', data_emissao={2}, data_validade={3}, segunda_via={4}, terceira_via={5}, primeiro_recadastro={6}, segundo_recadastro={7}, terceiro_recadastro={8}, observacoes={9} WHERE beneficiarios_cpf={10}'.format(
-                tabIdoso, self.ocupacao, self.dataEmissao, self.dataValidade, self.segundaVia, self.terceiraVia, self.primeiroRecadastro, self.segundoRecadastro, self.terceiroRecadastro, self.observacoes, self.beneficiarioCpf))
+            'UPDATE {0} SET , data_emissao={1}, data_validade={2}, segunda_via={3}, terceira_via={4}, primeiro_recadastro={5}, segundo_recadastro={6}, terceiro_recadastro={7}, observacoes={8} WHERE beneficiarios_cpf={9}'.format(
+                tabIdoso, self.dataEmissao, self.dataValidade, self.segundaVia, self.terceiraVia, self.primeiroRecadastro, self.segundoRecadastro, self.terceiroRecadastro, self.observacoes, self.beneficiarioCpf))
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabIdoso, self.beneficiarioCpf), conn)
         return selecao

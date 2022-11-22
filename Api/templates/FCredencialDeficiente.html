@@ -44,7 +44,7 @@
             Obs.: Campos com asterisco (<span>*</span>) são de preenchimento obrigatório.
         </P>
 
-        <form action="http://127.0.0.1:5000/beneficiarios/add" method="post" enctype="multipart/form-data">
+        <form action="http://127.0.0.1:5000/beneficiarios/deficiente/nova-credencial" method="post" enctype="multipart/form-data">
             <div>
                 <label for="nome">Nome <span>*</span></label>
                 <br>
@@ -99,9 +99,9 @@
                 <input type="text" id="num" name="num" required>
             </div>
             <div style="display: inline-block;">
-                <label for="complemento">Complemento <span>*</span></label>
+                <label for="complemento">Complemento</label>
                 <br>
-                <input type="text" id="complemento" name="complemento" required>
+                <input type="text" id="complemento" name="complemento">
             </div>
 
             <div style="display: inline-block; margin-right: 20px;">
@@ -163,7 +163,7 @@
                     atestando a
                     veracidade das informações,
                     acompanhada de correspondência em nome de terceiro. <span>*</span></label>
-                <input type="file" id="cpResidencia" name="cpResidencia" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
+                <input type="file" id="cpResidencia" name="cpResidencia" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" required>
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
@@ -176,7 +176,7 @@
                     diagnóstico e carimbo que conste nome e número de registro do profissional no respectivo Conselho
                     Regional <span>*</span></label>
                 <br>
-                <input type="file" id="laudoPericial" name="laudoPericial" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
+                <input type="file" id="laudoPericial" name="laudoPericial" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" required>
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
@@ -184,7 +184,7 @@
             <div style="margin-bottom: 10px;">
                 <label for="dcOfFoto">Documento oficial com foto <span>*</span></label>
                 <br>
-                <input type="file" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" id="dcOfFoto" name="dcOfFoto" >
+                <input type="file" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" id="dcOfFoto" name="dcOfFoto" required >
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
@@ -196,7 +196,7 @@
                     arts. 171 e 299. <span>*</span>
                 </label>
                 <br>
-                <input type="checkbox" id="dAcordo">
+                <input type="checkbox" id="dAcordo" required>
                 <label for="dAcordo" style="vertical-align: 15px;">De acordo.</label>
             </div>
             <div class="boxBtn">

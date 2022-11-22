@@ -60,7 +60,7 @@ class Beneficiario:
 
         conn.execute(
             'UPDATE {0} SET nome=\'{1}\', data_nascimento=\'{2}\', endereco=\'{3}\', genero=\'{4}\', telefone={5}, celular={6}, rg=\'{7}\', data_obito={8}, email=\'{9}\', c_documentos=\'{10}\', representante_legal={11} WHERE cpf={12}'.format(
-                tabBeneficiarios, self.nome, self.dataNascimento, self.endereco, self.telefone, self.celular, self.rg, self.dataObito, self.email, self.cDocumentos, self.repLegal, self.cpf))
+                tabBeneficiarios, self.nome, self.dataNascimento, self.endereco, self.genero, self.telefone, self.celular, self.rg, self.dataObito, self.email, self.cDocumentos, self.repLegal, self.cpf))
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, self.cpf), conn)
         return selecao
