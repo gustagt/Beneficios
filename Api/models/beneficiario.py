@@ -7,7 +7,7 @@ tabBeneficiarios = 'beneficiarios'
 
 class Beneficiario:
     
-    def __init__(self, cpf, nome, dataNascimento, endereco, celular, rg, email,  genero, cDocumentos="TESTE",telefone="NULL", dataObito="NULL", repLegal="NULL") -> None:
+    def __init__(self, cpf, nome, dataNascimento, endereco, celular, rg, email,  genero, cDocumentos,telefone="NULL", dataObito="NULL", repLegal="NULL") -> None:
         self.cpf = cpf
         self.nome = nome
         self.dataNascimento = dataNascimento

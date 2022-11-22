@@ -93,6 +93,7 @@ input {
     background: #EAEAEA;
     width: 440px;
     outline: none;
+    padding-left: 5px;
 }
 
 #cep {
