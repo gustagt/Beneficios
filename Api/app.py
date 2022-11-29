@@ -22,10 +22,10 @@ def beneficiarios():
 
 @app.route('/', methods=['POST'])
 def teste():
-    cpf = request.files["cpf"]
+    cpf = request.form["cpf"]
     
-    print(cpf.filename)
-    return cpf.filename
+   
+    return cpf
     
 
 # Rota /devs -> LISTAR todos os desenvolvedores cadastrados
