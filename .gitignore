@@ -1010,3 +1010,13 @@ interface/node_modules/vary/index.js
 interface/node_modules/vary/LICENSE
 interface/node_modules/vary/package.json
 interface/node_modules/vary/README.md
+interface/node_modules/cors/CONTRIBUTING.md
+interface/node_modules/cors/HISTORY.md
+interface/node_modules/cors/LICENSE
+interface/node_modules/cors/package.json
+interface/node_modules/cors/README.md
+interface/node_modules/cors/lib/index.js
+interface/node_modules/object-assign/index.js
+interface/node_modules/object-assign/license
+interface/node_modules/object-assign/package.json
+interface/node_modules/object-assign/readme.md

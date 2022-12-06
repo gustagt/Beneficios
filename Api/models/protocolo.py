@@ -1,5 +1,7 @@
-import db_connect
+
+from models import db_connect
 import pandas as pd
+from enum import Enum
 
 conn = db_connect.db_connect
 
@@ -51,3 +53,4 @@ class Protocolo:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
         return selecao
+    

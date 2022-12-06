@@ -8,8 +8,9 @@
     <title>Credencial de Estacionamento</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/Formularios.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Formularios.css')}}">
+
 </head>
 
 <body>
@@ -17,7 +18,7 @@
 
     <div class="boxTop">
         <div class="boxLogo">
-            <img src="/image/LogoTransCon.png" alt="Transcon" class="logo">
+            <img src="{{ url_for('static', filename='LogoTransCon.png')}}" alt="Transcon" class="logo">
         </div>
         <div class="titulo">
             <h1>Credencial de Estacionamento</h1>
@@ -26,16 +27,15 @@
     </div>
 
     <div class="subtitulo">
-        <h2>Solicitação de emissão - Credencial para Deficiente</h2>
+        <h2>Solicitação de emissão - Credencial para Idoso</h2>
     </div>
 
     <div class="conteudo">
 
-        <p class="textoInicial">Credencial de Estacionamento Especial para Pessoas com Deficiência ou Mobilidade
-            Reduzida
-            Formulário a ser preenchido pelo candidato ou seu representante legal para concessão do benefício de
-            Credencial de Estacionamento Especial para Pessoas com
-            Deficiência ou Mobilidade Reduzida, conforme Portaria TransCon nº 016, de 19 de julho de 2021.
+        <p class="textoInicial">Formulário a ser preenchido pelo candidato ou seu representante legal para concessão do
+            benefício de
+            Credencial de Estacionamento Especial para Pessoas Idosas,
+            conforme Portaria TransCon nº 015, de 19 de julho de 2021.
             Para dúvidas e demais informações, gentileza encaminhar para <a
                 href="mailto: beneficios.transcon@contagem.mg.gov.br">beneficios.transcon@contagem.mg.gov.br</a>.
         </p>
@@ -44,7 +44,7 @@
             Obs.: Campos com asterisco (<span>*</span>) são de preenchimento obrigatório.
         </P>
 
-        <form action="/pedirCredencialDeficiente" method="post" >
+        <form action="/formulario-idoso" method="post" enctype="multipart/form-data">
             <div>
                 <label for="nome">Nome <span>*</span></label>
                 <br>
@@ -59,8 +59,7 @@
             <div style="display: inline-block;">
                 <label for="cpf">CPF <span>*</span></label>
                 <br>
-                <input type="text" id="cpf" name="cpf" maxlength="11" required>
-
+                <input type="text" id="cpf" name="cpf" required>
             </div>
 
             <div style="display: inline-block; margin-right: 20px;">
@@ -76,11 +75,6 @@
                     <option value="feminino">Feminino</option>
                     <option value="prefiro nao informar">Prefiro não informar</option>
                 </select>
-            </div>
-            <div>
-                <label for="tpDeficiencia">Tipo de Deficiência <span>*</span></label>
-                <br>
-                <input type="text" id="tpDeficiencia" name="tpDeficiencia" required>
             </div>
             <div>
                 <label for="cep">CEP <span>*</span></label>
@@ -104,11 +98,13 @@
                 <input type="text" id="complemento" name="complemento">
             </div>
 
+
             <div style="display: inline-block; margin-right: 20px;">
                 <label for="bairro">Bairro <span>*</span></label>
                 <br>
                 <input type="text" id="bairro" name="bairro" required>
             </div>
+
             <div style="display: inline-block;">
                 <label for="cidade">Cidade <span>*</span></label>
                 <br>
@@ -152,7 +148,8 @@
                 <div style="display: inline-block;">
                     <label for="dResponsavel">Documento rep. legal <span>*</span></label>
                     <br>
-                    <input type="file" id="dResponsavel" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" name="dResponsavel">
+                    <input type="file" id="dResponsavel" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png"
+                        name="dResponsavel">
                     <br>
                     <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
                 </div>
@@ -163,20 +160,8 @@
                     atestando a
                     veracidade das informações,
                     acompanhada de correspondência em nome de terceiro. <span>*</span></label>
-                <input type="file" id="cpResidencia" name="cpResidencia" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" required>
-                <br>
-                <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
-            </div>
-
-            <div style="margin-bottom: 10px;">
-                <label for="laudoPericial">Laudo pericial, emitido em até seis meses anteriores à data de solicitação da
-                    Credencial, exceto se a deficiência for congênita,
-                    em que o laudo apresentado poderá ser de qualquer data, com assinatura do médico ou fisioterapeuta
-                    responsável pelo
-                    diagnóstico e carimbo que conste nome e número de registro do profissional no respectivo Conselho
-                    Regional <span>*</span></label>
-                <br>
-                <input type="file" id="laudoPericial" name="laudoPericial" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" required>
+                <input type="file" id="cpResidencia" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" name="cpResidencia"
+                    required>
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
@@ -184,7 +169,7 @@
             <div style="margin-bottom: 10px;">
                 <label for="dcOfFoto">Documento oficial com foto <span>*</span></label>
                 <br>
-                <input type="file" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" id="dcOfFoto" name="dcOfFoto" required >
+                <input type="file" id="dcOfFoto" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png" name="dcOfFoto" required>
                 <br>
                 <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
             </div>
@@ -196,7 +181,7 @@
                     arts. 171 e 299. <span>*</span>
                 </label>
                 <br>
-                <input type="checkbox" id="dAcordo" required>
+                <input type="checkbox" id="dAcordo" name="dAcordo" required>
                 <label for="dAcordo" style="vertical-align: 15px;">De acordo.</label>
             </div>
             <div class="boxBtn">
@@ -205,11 +190,11 @@
         </form>
 
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-        crossorigin="anonymous">
-    </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+        </script>
+    <script src="js/fCredencialIdoso.js"></script>
 </body>
 
 </html>
