@@ -17,11 +17,12 @@ h2 {
 }
 
 .entradaDados {
-    width: 465px;
+    width: 505px;
     height: 123px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 83px;
+
 }
 
 label {
@@ -62,7 +63,7 @@ input {
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 
@@ -86,7 +87,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .conterBtn {
-    margin-top: 100px;
+    margin-top: 20px;
     width: 163px;
     height: 41px;
     margin-left: auto;

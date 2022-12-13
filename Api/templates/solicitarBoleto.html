@@ -6,15 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credencial de Estacionamento</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='PConsulta.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='solicitarBoleto.css')}}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='Logo_ICO.png')}}" type="image/png">
-
 </head>
 
 <body>
+
 
     <div class="boxTop">
         <div class="boxLogo">
@@ -29,25 +27,31 @@
     </div>
 
     <div class="subtitulo">
-        <h2>Acompanhamento de Emissão</h2>
+        <h2>Solicitação de 2º Via</h2>
     </div>
-
-    <form action="/consulta" method="post">
-        <div class="entradaDados">
-            <div class="entradaProtocolo">
-                <label for="protocolo">N° Protocolo: </label>
-                <input type="number" name="protocolo" id="ipProtocolo" required>
-            </div>
-            <div class="entradaCpf">
-                <label for="cpf">CPF: </label>
-                <input type="number" name="cpf" id="ipCpf" required>
-            </div>
-
+    <div class="conteudo">
+        <div class="infoPessoal">
+            <p>
+                N° Credencial: {{nCredencial}}
+            </p>
+            <p>
+                CPF: {{cpf}}
+            </p>
+            <p>
+                Nome: {{nome}}
+            </p>
+        </div>
+        <div class="info">
+            <p>Para emissão de 2º via da credencial será cobrada taxa de acordo com a tabela de preço público vigente.
+            </p>
+            <p>Após a solicitação será gerado boleto bancário e sua nova credencial será enviada em até 7 dias úteis
+                após a confirmação do pagamento.</p>
+            <p>O boleto será enviado para o email cadastrado.</p>
         </div>
         <div class="conterBtn">
-            <button class="btnPesquisar">Pesquisar</button>
+            <button class="btnSolicitar" type="submit">solicitar</button>
         </div>
-    </form>
+    </div>
 </body>
 
 </html>
