@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credencial de Estacionamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='PConsulta.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Logo_ICO.png')}}" type="image/png">
+</head>
+
+<body>
+    <div class="conteudo">
+
+        <div class="boxTop">
+            <div class="boxLogo">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='LogoTransCon.png')}}" alt="Transcon" class="logo">
+                </a>
+            </div>
+            <div class="titulo">
+                <h1>Credencial de Estacionamento</h1>
+            </div>
+            <div style="height: 131px; width: 179px;"></div>
+        </div>
+
+        <div class="subtitulo">
+            <h2>Solicitação de 2º Via</h2>
+        </div>
+        <form action="/segunda-via" method="post" enctype="multipart/form-data">
+            <div class="entradaDados">
+                <div class="entradaProtocolo">
+                    <label for="nCredencial">N° da Credencial: </label>
+                    <input type="number" name="nCredencial" required>
+                </div>
+                <div class="entradaCpf">
+                    <label for="cpf">CPF: </label>
+                    <input type="number" name="cpf" id="ipCpf" required>
+                </div>
+                <div>
+                    <label for="" style="margin-top: 15px; margin-bottom: 15px;">Tipo de Credencial: </label>
+                    <br>
+                    <input type="radio" id="Deficiente" name="tpCredencial" value="deficiente" class="margin" required>
+                    <label for="Deficiente" style="margin-right: 33px;">Deficiente</label>
+                    <input type="radio" id="Idoso" name="tpCredencial" value="idoso" required>
+                    <label for="Idoso">Idoso</label>
+                </div>
+                <div class="conterBtn">
+                    <button class="btnPesquisar" type="submit">Solicitar</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+
+</html>

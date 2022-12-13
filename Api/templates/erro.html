@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='erro.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Logo_ICO.png')}}" type="image/png">
+</head>
+
+<body>
+    <div class="boxLogo">
+        <a href="/">
+            <img src="{{ url_for('static', filename='LogoTransCon.png')}}" alt="Transcon" class="logo">
+        </a>
+    </div>
+    <div class="conteudo">
+        <h1 style="text-align: center;">Erro: 400</h1>
+        <p>{{mensagem}}</p>
+    </div>
+</body>
+
+</html>

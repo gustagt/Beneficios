@@ -10,15 +10,17 @@
 
 <body>
     </div>
-    <form action="http://127.0.0.1:5000/" method="post" enctype="multipart/form-data">
+    <form id="formizinho"  >
         <div style="display: inline-block;">
             <label for="cpf">CPF <span>*</span></label>
             <br>
-            <input type="text" id="cpf" name="cpf" maxlength="11">
+            <input type="file" id="cpf" name="cpf" maxlength="11">
+            <input type="text" id="np" name="np" maxlength="11">
         </div>
-        <button type="submit">OK</button>
+        <button type="button" id="ok">OK</button>
     </form>
     </div>
+    <script src="js/teste.js"></script>
 </body>
 
 </html>

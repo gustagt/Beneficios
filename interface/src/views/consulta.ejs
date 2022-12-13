@@ -10,40 +10,40 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/PConsulta.css">
+
 </head>
 
 <body>
-    <div class="conteudo">
 
-        <div class="boxTop">
-            <div class="boxLogo">
-                <img src="/image/LogoTransCon.png" alt="Transcon" class="logo">
-            </div>
-            <div class="titulo">
-                <h1>Credencial de Estacionamento</h1>
-            </div>
-            <div style="height: 131px; width: 179px;"></div>
+    <div class="boxTop">
+        <div class="boxLogo">
+            <img src="/image/LogoTransCon.png" alt="Transcon" class="logo">
         </div>
-
-        <div class="subtitulo">
-            <h2>Solicitação de 2º Via</h2>
+        <div class="titulo">
+            <h1>Credencial de Estacionamento</h1>
         </div>
+        <div style="height: 131px; width: 179px;"></div>
+    </div>
 
+    <div class="subtitulo">
+        <h2>Acompanhamento de Emissão</h2>
+    </div>
+
+    <form action="/consulta" method="post">
         <div class="entradaDados">
             <div class="entradaProtocolo">
                 <label for="protocolo">N° Protocolo: </label>
-                <input type="number" name="protocolo" id="ipProtocolo">
+                <input type="number" name="protocolo" id="ipProtocolo" required>
             </div>
             <div class="entradaCpf">
                 <label for="cpf">CPF: </label>
-                <input type="number" name="cpf" id="ipCpf">
+                <input type="number" name="cpf" id="ipCpf" required>
             </div>
         </div>
         <div class="conterBtn">
-            <button class="btnPesquisar">Solicitar</button>
+            <button class="btnPesquisar">Pesquisar</button>
         </div>
-    </div>
-
+    </form>
 </body>
 
 </html>
