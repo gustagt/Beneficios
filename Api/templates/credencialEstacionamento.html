@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,15 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='CredencialEstacionamento.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Logo_ICO.png')}}" type="image/png">
 </head>
 
 <body>
     <div class="boxTop">
         <div class="boxLogo">
-            <img src="{{ url_for('static', filename='LogoTransCon.png')}}" alt="Transcon" class="logo">
+            <a href="/">
+                <img src="{{ url_for('static', filename='LogoTransCon.png')}}" alt="Transcon" class="logo">
+            </a>
         </div>
         <div class="titulo">
             <h1>Credencial de Estacionamento</h1>
