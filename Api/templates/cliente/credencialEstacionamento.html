@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credencial de Estacionamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/CredencialEstacionamento.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon/Logo_ICO.png')}}" type="image/png">
+</head>
+
+<body>
+    <div class="boxTop">
+        <div class="boxLogo">
+            <a href="/">
+                <img src="{{ url_for('static', filename='imagens/LogoTransCon.png')}}" alt="Transcon" class="logo">
+            </a>
+        </div>
+        <div class="titulo">
+            <h1>Credencial de Estacionamento</h1>
+        </div>
+        <div style="height: 131px; width: 179px;"></div>
+    </div>
+    <div class="subtitulo_cima">
+        <h2>Protocolo n°: {{nProtocolo}}</h2>
+    </div>
+    <div class="subtitulo_baixo">
+        <h2>Status da Emissão</h2>
+    </div>
+    <div id="Barra_Processo" class="stepper-wrapper">
+        <div class="stepper-item active completed">
+            <div class="step-counter"><b>1</b></div>
+            <div class="step-name">Em análise<br>27/09/2022</div>
+        </div>
+        <!-- <!-steppter-item failed-doc - FALTA DOCUMENTO -> -->
+            <div class="stepper-item ">
+
+                <div class="step-counter"><b>2</b></div>
+                <div class="step-name">Documentação pendente<br>29/09/2022</div>
+
+            </div>
+            <div class="stepper-item  ">
+                <div class="step-counter"><b>3</b></div>
+                <div class="step-name">Em produção<br>30/09/2022</div>
+            </div>
+            <div class="stepper-item  ">
+                <div class="step-counter"><b>4</b></div>
+                <div class="step-name">Enviado<br>31/09/2022</div>
+            </div>
+            <div class="stepper-item ">
+                <div class="step-counter"><b>5</b></div>
+                <div class="step-name">Entregue<br>01/10/2022</div>
+            </div>
+    </div>
+    <!-- <!-IRÁ APARECER APENAS QUANDO O STATUS FOR FALTA DOCUMENTO -> -->
+        <div id="Anexo" class="container text-center">
+            <label for="cpResidencia" class="btnFile">Anexar arquivo</label>
+            <input type="file" id="cpResidencia">
+            <br>
+            <span class="legendaBtn">Extensões permitidas: doc, docx, pdf, jpg, png, jpeg</span>
+        </div>
+</body>
+
+</html>

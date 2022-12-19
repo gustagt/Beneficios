@@ -5,3 +5,6 @@ class Erros(Enum):
     formularioDeficiente = 'Já existe um cadastro com esse cpf para a Credencial de Deficiente.'
     consulta = 'Dados inseridos não encontrados.'
     email = 'Email já está em uso. Tente usar outro email.'
+    
+class Mensagens(Enum):
+    mensagemBoleto = 'O boleto vencera em dois dias uteis.'
