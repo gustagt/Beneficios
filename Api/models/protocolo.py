@@ -1,9 +1,8 @@
-
-from models import db_connect
+from models.db_connect import db_connect
 import pandas as pd
 from enum import Enum
 
-conn = db_connect.db_connect
+conn = db_connect
 
 tabProtocolo = 'protocolo'
 
@@ -27,17 +26,20 @@ class Protocolo:
 
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE beneficiarios_cpf={1}".format(tabProtocolo, self.beneficiarioCpf), conn)
-        return selecao
+        protocolo = Protocolo.convertSelect(selecao)
+        return protocolo
 
     def selectByCpf(cpf):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  beneficiarios_cpf={1}".format(tabProtocolo, cpf), conn)
-        return selecao
+        protocolo = Protocolo.convertSelect(selecao)
+        return protocolo
 
     def selectByNProtocolo(nProtocolo):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
-        return selecao
+        protocolo = Protocolo.convertSelect(selecao)
+        return protocolo
 
     def updateByNProcolo(self):
         conn.execute(
@@ -45,7 +47,8 @@ class Protocolo:
                 tabProtocolo, self.servico, self.status, self.nProtocolo))
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, self.nProtocolo), conn)
-        return selecao
+        protocolo = Protocolo.convertSelect(selecao)
+        return protocolo
 
     def deleteByNProcolo(nProtocolo):
         conn.execute("DELETE FROM {0} WHERE n_protocolo={1}".format(
@@ -53,4 +56,17 @@ class Protocolo:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
         return selecao
+    
+    def validarProtocolo(cpf):
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} WHERE  beneficiarios_cpf={1}".format(tabProtocolo, cpf), conn)
+        return selecao
+
+    def convertSelect(selecao):
+        protocolo = Protocolo(selecao['beneficiarios_cpf'].iloc[-1],selecao['status'].iloc[-1],selecao['servico'].iloc[-1],selecao['n_protocolo'].iloc[-1])
+        return protocolo
+
+
+
+
     
