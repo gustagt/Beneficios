@@ -6,9 +6,10 @@ conn = db_connect.db_connect
 
 tabBeneficiarios = 'beneficiarios'
 
+
 class Beneficiario:
-    
-    def __init__(self, cpf, nome, dataNascimento,  rua, bairro, numComplemento, cidade, cep, celular, rg, email,  genero, cDocumentos,telefone="NULL", dataObito="NULL", repLegal="NULL") -> None:
+
+    def __init__(self, cpf, nome, dataNascimento,  rua, bairro, numComplemento, cidade, cep, celular, rg, email,  genero, cDocumentos, telefone="NULL", dataObito="NULL", repLegal="NULL") -> None:
         self.cpf = cpf
         self.nome = nome
         self.dataNascimento = dataNascimento
@@ -25,8 +26,6 @@ class Beneficiario:
         self.cDocumentos = cDocumentos
         self.repLegal = repLegal
         self.genero = genero
-        
-        
 
     def listAll():
         conn = db_connect.db_connect
@@ -48,12 +47,14 @@ class Beneficiario:
 
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, self.cpf), conn)
-        return selecao
+        beneficiario = Beneficiario.convertSelect(selecao)
+        return beneficiario
 
     def selectByCpf(cpf):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, cpf), conn)
-        return selecao
+        beneficiario = Beneficiario.convertSelect(selecao)
+        return beneficiario
 
     def updateByCpf(self):
 
@@ -68,7 +69,8 @@ class Beneficiario:
                 tabBeneficiarios, self.nome, self.dataNascimento, self.rua, self.genero, self.telefone, self.celular, self.rg, self.dataObito, self.email, self.cDocumentos, self.repLegal, self.bairro, self.cidade, self.numComplemento, self.numComplemento, self.cpf))
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, self.cpf), conn)
-        return selecao
+        beneficiario = Beneficiario.convertSelect(selecao)
+        return beneficiario
 
     def deleteByCpf(cpf):
         conn.execute("DELETE FROM {0} WHERE cpf={1}".format(
@@ -76,12 +78,22 @@ class Beneficiario:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, cpf), conn)
         return selecao
-    
+
     def emailDisponivel(email):
         selecao = pd.read_sql_query(
             "SELECT email FROM {0} where email=\'{1}\'".format(tabBeneficiarios, email), conn)
         if selecao.empty:
             return True
-        
+
         return False
+    
+    def ValidarBeneficiario(cpf):
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, cpf), conn)
+        return selecao
+
+    def convertSelect(selecao):
+        beneficiario = Beneficiario(selecao['cpf'][0], selecao['nome'][0], selecao['data_nascimento'][0], selecao['rua'][0], selecao['bairro'][0], selecao['num_complemento'][0], selecao['cidade'][0], selecao['cep'][0],
+                                    selecao['celular'][0], selecao['rg'][0], selecao['email'][0], selecao['genero'][0], selecao['c_documentos'][0], selecao['telefone'][0], selecao['data_obito'][0], selecao['representante_legal'][0])
+        return beneficiario
     
