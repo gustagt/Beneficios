@@ -1,9 +1,8 @@
-import db_connect
+from models.db_connect import db_connect
 import pandas as pd
-from enum import Enum
-from datetime import date
 
-conn = db_connect.db_connect
+
+conn = db_connect
 
 tabProtocolo = 'protocolo'
 
@@ -61,6 +60,7 @@ class Protocolo:
         protocolo = Protocolo.convertSelect(selecao)
         return protocolo
 
+    # aqui
     def updateByNProcolo(self):
         conn.execute(
             'UPDATE {0} SET servico=\'{1}\', status=\'{2}\' WHERE n_protocolo={3}'.format(
@@ -89,6 +89,4 @@ class Protocolo:
         return protocolo
 
 
-dataAnalise = date.today()
-teste = Protocolo(321231231, "CU1", "CU2", dataAnalise, "CU3")
-teste.add()
+
