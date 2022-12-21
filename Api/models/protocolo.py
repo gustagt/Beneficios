@@ -56,7 +56,7 @@ class Protocolo:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
         return selecao
-    
+
     def validarProtocolo(cpf):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  beneficiarios_cpf={1}".format(tabProtocolo, cpf), conn)

@@ -1,5 +1,8 @@
 from flask import Flask, request, render_template
 
+# imports dos controladores funcionario
+from controllers.funcionario.loginController import LoginController as lo
+
 # imports dos controladores
 from controllers.cliente.solicitarBoletoController import SolicitarBoletoController as slBoleto
 from controllers.cliente.segundaViaController import SegundaViaController as sgVia
@@ -27,6 +30,18 @@ def index():
     return render_template('cliente/index.html')
 
 
+# funcionario
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method == 'GET':
+        return lo.consultaGET()
+
+    if request.method == "POST":
+        return lo.consultaPOST(request)
+
+
+# cliente
 @app.route("/solicitar-boleto", methods=["GET", "POST"])
 def solicitarBoleto():
     if request.method == "GET":
