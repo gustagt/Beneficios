@@ -22,7 +22,17 @@ class Protocolo:
 
     def listAll():
         lista = pd.read_sql_query(
-            'SELECT * FROM {0} '.format(tabProtocolo), conn)
+            'SELECT * FROM {0}'.format(tabProtocolo), conn)
+        return lista
+    
+    def listNaoFinalizados():
+        lista = pd.read_sql_query(
+            'SELECT * FROM {0} WHERE status != \'Finalizado\''.format(tabProtocolo), conn)
+        return lista
+    
+    def listFinalizados():
+        lista = pd.read_sql_query(
+            'SELECT * FROM {0} WHERE status = \'Finalizado\''.format(tabProtocolo), conn)
         return lista
 
     def add(self):
@@ -59,6 +69,21 @@ class Protocolo:
             "SELECT * FROM {0} WHERE  n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
         protocolo = Protocolo.convertSelect(selecao)
         return protocolo
+    
+    def listAllIdosos():
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} WHERE  tipo = 'Idoso' AND status != \'Finalizado\'".format(tabProtocolo), conn)
+        return selecao
+    
+    def listAllDeficientes():
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} WHERE  tipo = 'Deficiente' AND status != \'Finalizado\'".format(tabProtocolo), conn)
+        return selecao
+    
+    def listAllBoletos():
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} WHERE  tipo = 'Boleto' AND status != \'Finalizado\'".format(tabProtocolo), conn)
+        return selecao
 
     # aqui
     def updateByNProcolo(self):
@@ -87,6 +112,4 @@ class Protocolo:
                               selecao['servico'].iloc[-1], selecao['data_analise'].iloc[-1], selecao['tipo'].iloc[-1], selecao['n_protocolo'].iloc[-1],
                               selecao['data_docpen'].iloc[-1], selecao['data_producao'].iloc[-1], selecao['data_enviado'].iloc[-1], selecao['data_entregue'].iloc[-1])
         return protocolo
-
-
 

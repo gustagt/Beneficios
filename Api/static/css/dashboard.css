@@ -1,0 +1,237 @@
+
+.logo {
+    width: 109px;
+    height: 80px;
+}
+
+.boxTop{
+    display: flex;
+    justify-content: space-around;
+    margin-top: -35px;
+}
+
+.boxLogo{
+    margin-top: 71px;
+}
+
+.titulo {
+    margin-top: 90px;
+    width: 577px;
+    height: 46px;
+}
+
+.subtitulo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+h2 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 34px;
+    text-align: center;
+
+    margin-left: -75px;
+
+    color: #000000;
+}
+
+.entradaDados {
+    width: 505px;
+    height: 123px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+
+}
+
+label {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    /* identical to box height */
+
+
+    color: #000000;
+
+    margin-right: 20px;
+}
+
+.entrada-1 {
+    text-align: end;
+}
+
+.entrada-2 {
+    text-align: end;
+    margin-top: 39px;
+}
+
+input {
+    box-sizing: border-box;
+
+    width: 250px;
+    height: 30px;
+
+    border: 0.5px solid #000000;
+    border-radius: 3px;
+
+    padding-left: 9px;
+
+    margin-top: 20px;
+    margin-right: 100px;
+    margin-bottom: 20px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+.btnPesquisar {
+    width: 163px;
+    height: 41px;
+
+    background: #0A8F3E;
+    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    border: none;
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+
+
+    color: #FFFFFF;
+}
+
+.conterBtn {
+    margin-top: 20px;
+    width: 163px;
+    height: 41px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    margin-top: 10px;
+    margin-right: 11px;
+}
+
+table {
+    margin-left: 70px;
+}
+
+span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+}
+
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.b-example-divider {
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.b-example-vr {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+
+.nav-scroller {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+
+
+html {
+    height: -webkit-fill-available;
+}
+
+main {
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.pagina {
+    overflow-y: auto;
+}
+
+table tr {
+    cursor: pointer;
+}

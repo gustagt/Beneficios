@@ -10,21 +10,22 @@ import os
 from werkzeug.utils import secure_filename
 from pathlib import Path
 import re
+from datetime import date
 
+dataAtual = date.today()
 caminhoDocumentos = Path().absolute()
 
 class FormularioIdosoController:
     def formularioIdosoGET():
         return render_template('cliente/fCredencialIdoso.html'), 200
     
-    def formularioIdosoPOST(request: request):
+    def formularioIdosoPOST():
         cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
 
-        duplicidade = id.selectByCpf(cpf)
+        
        
 
-        if duplicidade.empty:
-
+        try:
             nome = request.form['nome']
             dataNascimento = request.form['dataNascimento']
             celular = re.sub("[^0-9]", "",str(request.form['celular']))
@@ -45,11 +46,10 @@ class FormularioIdosoController:
 
             cpResidencia = request.files['cpResidencia']
             dcOfFoto = request.files['dcOfFoto']
-            extCpResidencia = os.path.splitext(cpf)[1]
-            extDcOfFoto = request.files['dcOfFoto']
+
             
 
-            caminho = caminhoDocumentos / 'documentos' / 'idosos' / cpf
+            caminho = caminhoDocumentos / 'documentos' / cpf
 
             os.mkdir(caminho)
 
@@ -57,12 +57,12 @@ class FormularioIdosoController:
                 cpf, nome, dataNascimento, rua, bairro, num, cidade, cep, celular, rg, email, genero, caminho.as_posix())
             credencialD = id(cpf)
             protocolo = pt(
-                cpf, 'Aberto', 'Solicitação para Credencial de Idoso')
+                cpf, 'Em analise', 'Solicitação para Credencial', dataAtual, 'Idoso')
 
             cpResidencia.save(os.path.join(
-                caminho, secure_filename('cpResodencia' + os.path.splitext(cpResidencia.filename)[1])))
+                caminho, secure_filename('comprovante_residencia' + os.path.splitext(cpResidencia.filename)[1])))
             dcOfFoto.save(os.path.join(
-                caminho, secure_filename('dcOfFoto' + os.path.splitext(dcOfFoto.filename)[1])))
+                caminho, secure_filename('oficial_foto' + os.path.splitext(dcOfFoto.filename)[1])))
 
 
 
@@ -73,7 +73,7 @@ class FormularioIdosoController:
                 nResponsavel = request.form['nResponsavel']
                 dResponsavel = request.files['dResponsavel']
                 dResponsavel.save(os.path.join(
-                    caminho, secure_filename('dResponsavel' + os.path.splitext(dResponsavel.filename)[1])))
+                    caminho, secure_filename('representante_legal' + os.path.splitext(dResponsavel.filename)[1])))
                 beneficiario.repLegal = nResponsavel
 
             if bn.ValidarBeneficiario(cpf).empty:
@@ -84,11 +84,10 @@ class FormularioIdosoController:
             else:
                 beneficiario.updateByCpf()
 
-            protocolo.add()
+            rProtocolo = protocolo.add()
             credencialD.add()
 
-            nProtocolo = pt.selectByCpf(cpf).nProtocolo
-            return cs.renderConsula(nProtocolo), 200
+            return cs.renderConsula(rProtocolo.nProtocolo), 200
 
-        else:
+        except:
             return render_template('cliente/erro.html', mensagem=e.Erros.formularioIdoso.value), 400

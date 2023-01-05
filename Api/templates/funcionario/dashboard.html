@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+
+  <title>Credencial de Estacionamento</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sidebars/">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/dashboard.css')}}" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icon/Logo_ICO.png')}}" type="image/png">
+
+</head>
+
+<body>
+
+  <main class="d-flex flex-nowrap scrollarea">
+
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; border-right: 1px black solid;">
+
+      <span class="fs-4 text-center">{{nomeUsuario}}</span>
+
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a class="nav-link link-dark fw-bold" aria-current="page">
+            CREDENCIAIS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/credenciais/idosos" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            Idoso
+          </a>
+        </li>
+        <li>
+          <a href="/credenciais/deficientes" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            Deficiente
+          </a>
+        </li>
+        <li>
+          <a href="/protocolos" class="nav-link link-dark fw-bold">
+            PROTOCOLOS
+          </a>
+        </li>
+        <li>
+          <a href="/protocolos/idosos" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            Idoso
+          </a>
+        </li>
+        <li>
+          <a href="/protocolos/deficientes" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            Deficiente
+          </a>
+        </li>
+        <li>
+          <a href="/protocolos/boletos" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            2ª Via
+          </a>
+        </li>
+        <li>
+          <a href="/protocolos/finalizados" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            Finalizados
+          </a>
+        </li>
+      </ul>
+
+      <hr>
+      <div class="d-flex justify-content-center ">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none " aria-expanded="false">
+          <strong>SAIR</strong>
+        </a>
+      </div>
+
+
+    </div>
+    <div class="b-example-vr"></div>
+
+    <div class="col-10 pagina">
+      <div class="boxTop">
+        <div class="boxLogo">
+          <a href="/login">
+            <img src="{{ url_for('static', filename='imagens/LogoTransCon.png')}}" alt="Transcon" class="logo">
+          </a>
+        </div>
+        <div class="titulo">
+          <h1>Credencial de Estacionamento</h1>
+        </div>
+        <div style="height: 131px; width: 179px;"></div>
+      </div>
+
+      <div class="subtitulo">
+        <h2 class="fw-bold">{{subtitulo}}</h2>
+      </div>
+
+      {%if servico == 'protocolo'%}
+      <form action="/opcoes" method="get" name="formulario">
+      {%else %}
+      <form action="/credencial" method="get" name="formulario">
+      {%endif%}
+        <div class="float-end">
+          <span>Pesquisar: </span>
+          <input id="barraPesquisa" type="text">
+        </div>
+        <table class="table table-hover" style="width: 1500px; margin: 20px auto;" id="minhaTabela">
+          {% if servico == 'protocolo'%}
+          <tr style="background: #D9D9D9;">
+            <th style="width: 150px;">N Protocolo</th>
+            <th style="width: 350px;">Beneficiario</th>
+            <th style="width: 200px;">CPF</th>
+            <th style="width: 350px;">Serviço</th>
+            <th>Tipo</th>
+            <th>Status</th>
+          </tr>
+          <tbody id="corpoTabela">
+            {% for i in range(linhas) %}
+            <tr class="rows">
+              <td>{{'%08d' | format(lista['n_protocolo'].values[i])}}</td>
+              <td>{{beneficiarios.loc[lista['beneficiarios_cpf'].values[i], 'nome']}}</td>
+              <td>{{lista['beneficiarios_cpf'].values[i]}}</td>
+              <td>{{lista['servico'].values[i]}}</td>
+              <td>{{lista['tipo'].values[i]}}</td>
+              <td>{{lista['status'].values[i]}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <!-- mudar para credencial -->
+          {% else %}
+          <tr style="background: #D9D9D9;">
+            <th style="width: 150px;">N Credencial</th>
+            <th style="width: 350px;">Beneficiario</th>
+            <th style="width: 200px;">CPF</th>
+            <th style="width: 200px;">Tipo</th>
+            <th>Data de Emissão</th>
+            <th>Data Validade</th>
+          </tr>
+          <tbody id="corpoTabela">
+            {% for i in range(linhas) %}
+            <tr class="rows">
+              <td>{{'%08d' | format(lista['n_credencial'].values[i])}}</td>
+              <td>{{beneficiarios.loc[lista['beneficiarios_cpf'].values[i][0], 'nome']}}</td>
+              <td>{{lista['beneficiarios_cpf'].values[i][0]}}</td>
+              <td>{{lista['tipo'].values[i]}}</td>
+              <td>{{lista['data_emissao'].values[i].strftime('%d/%m/%Y')}}</td>
+              <td>{{lista['data_validade'].values[i].strftime('%d/%m/%Y')}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          {% endif %}
+        </table>
+      </form>
+
+      <div id="pagination" class="pagination d-flex justify-content-center"></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js')}}"></script>
+</body>
+
+</html>

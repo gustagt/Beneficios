@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw
-from flask import render_template, send_file
+from flask import render_template, send_file, request
 
 import openpyxl
 from win32com import client
@@ -30,41 +30,39 @@ class SolicitarBoletoController:
     def __init__(self):
         None
 
-    def solicitarBoletoGET(request):
+    def solicitarBoletoGET():
 
         cpf = request.cookies.get('cpf')
         nCredencial = request.cookies.get('nCredencial')
         tpCredencial = request.cookies.get('tpCredencial')
 
-        if tpCredencial.lower() == 'deficiente':
-            credencial = df.selectByCpf(cpf)
-            if not (credencial.empty):
-                nCredencialResp = credencial['n_credencial'].values[0]
+        try: 
+            if tpCredencial.lower() == 'deficiente':
+                credencial = df.selectByCpf(cpf)
                 beneficiario = bn.selectByCpf(cpf)
-                if nCredencialResp == int(nCredencial):
+                if credencial.nCredencial == int(nCredencial):
                     protocolo = pt(
-                        beneficiario.cpf, 'Não pago', "Segunda via - Boleto").add()
+                        beneficiario.cpf, 'Em Analise', "Segunda via - Deficiente", dataAtual, 'Boleto').add()
                     SolicitarBoletoController.creatCodigoBarra(
                         beneficiario, protocolo)
                     file = path / 'static' / 'boletos' / \
                         '{0}.pdf'.format(protocolo.nProtocolo)
                     return send_file(file), 200
 
-        elif tpCredencial.lower() == 'idoso':
-            credencial = id.selectByCpf(cpf)
-            if not (credencial.empty):
-                nCredencialResp = credencial['n_credencial'].values[0]
+            elif tpCredencial.lower() == 'idoso':
+                credencial = id.selectByCpf(cpf)
+
                 beneficiario = bn.selectByCpf(cpf)
-                if nCredencialResp == int(nCredencial):
+                if credencial.nCredencial == int(nCredencial):
                     protocolo = pt(
-                        beneficiario.cpf, 'Não pago', "Segunda via - Boleto").add()
+                        beneficiario.cpf, 'Em Analise', "Segunda via - Idoso", dataAtual, 'Boleto').add()
                     SolicitarBoletoController.creatCodigoBarra(
                         beneficiario, protocolo)
                     file = path / 'static' / 'boletos' / \
                         '{0}.pdf'.format(protocolo.nProtocolo)
                     return send_file(file), 200
-
-        return render_template('cliente/erro.html', mensagem=e.Erros.consulta.value), 400
+        except: 
+            return render_template('cliente/erro.html', mensagem=e.Erros.consulta.value), 400
 
     def imprimirBoleto(beneficiario: bn, protocolo: pt, codigo44):
 

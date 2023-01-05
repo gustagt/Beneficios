@@ -8,13 +8,13 @@ class ConsultaController:
     def consultaGET():
         return render_template('cliente/consulta.html'), 200
     
-    def consultaPOST(request: request):
+    def consultaPOST():
         nProtocolo = request.form['protocolo']
         cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
 
         if not (pt.validarProtocolo(cpf).empty):
-            protocolo = pt.selectByCpf(cpf)
-            if protocolo.nProtocolo == int(nProtocolo):
+            protocolo = pt.selectByNProtocolo(nProtocolo)
+            if protocolo.beneficiarioCpf == int(cpf):
                 return ConsultaController.renderConsula(nProtocolo)
 
         return render_template('cliente/erro.html', mensagem=e.Erros.consulta.value), 400

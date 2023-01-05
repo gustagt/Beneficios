@@ -4,7 +4,7 @@ import pandas as pd
 conn = db_connect.db_connect
 
 tabIdoso = 'idoso'
-
+tabProtocolo = 'protocolo'
 
 class Idoso:
     def __init__(self, beneficiarioCpf, nCredencial="NULL", dataEmissao="NULL", dataValidade="NULL", segundaVia="NULL", terceiraVia="NULL", primeiroRecadastro="NULL", segundoRecadastro="NULL", terceiroRecadastro="NULL", observacoes="NULL",) -> None:
@@ -22,6 +22,11 @@ class Idoso:
     def listAll():
         lista = pd.read_sql_query(
             'SELECT * FROM {0} '.format(tabIdoso), conn)
+        return lista
+
+    def listAllConcluidos():
+        lista = pd.read_sql_query(
+            'SELECT * FROM {0} as ID RIGHT JOIN {1} as PT on  ID.beneficiarios_cpf = PT.beneficiarios_cpf WHERE PT.status=\'Finalizado\' AND PT.tipo=\'Idoso\''.format(tabIdoso, tabProtocolo), conn)
         return lista
 
     def add(self):
@@ -61,15 +66,16 @@ class Idoso:
     def selectByCpf(cpf):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  beneficiarios_cpf={1}".format(tabIdoso, cpf), conn)
-        return selecao
+        idoso = Idoso.convertSelect(selecao)
+        return idoso
 
     def selectByNCredencial(nCredencial):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  n_credencial={1}".format(tabIdoso, nCredencial), conn)
-        return selecao
+        idoso = Idoso.convertSelect(selecao)
+        return idoso
 
     def updateByCpf(self):
-
         if self.observacoes != "NULL":
             self.observacoes = '\''+self.observacoes+"\'"
 
@@ -79,6 +85,15 @@ class Idoso:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabIdoso, self.beneficiarioCpf), conn)
         return selecao
+    
+    def setData(cpf, dataValidade, dataEmissao):
+        conn.execute(
+            'UPDATE {0} SET  data_validade=\'{1}\', data_emissao=\'{2}\' WHERE beneficiarios_cpf={3}'.format(
+                tabIdoso, dataValidade, dataEmissao, cpf))
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabIdoso, cpf), conn)
+        idoso = Idoso.convertSelect(selecao)
+        return idoso
 
     def deleteByCpf(cpf):
         conn.execute("DELETE FROM {0} WHERE beneficiarios_cpf={1}".format(
@@ -86,3 +101,8 @@ class Idoso:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabIdoso, cpf), conn)
         return selecao
+
+    def convertSelect(selecao):
+        idoso = Idoso(selecao['beneficiarios_cpf'][0], selecao['n_credencial'][0], selecao['data_emissao'][0], selecao['data_validade'][0], selecao['segunda_via'][0], selecao['terceira_via'][0], selecao['primeiro_recadastro'][0], selecao['segundo_recadastro'][0],
+                                    selecao['terceiro_recadastro'][0], selecao['observacoes'][0])
+        return idoso

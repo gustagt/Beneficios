@@ -4,6 +4,7 @@ import pandas as pd
 conn = db_connect.db_connect
 
 tabDeficiente = 'deficiente'
+tabProtocolo = 'protocolo'
 
 class Deficiente:
     def __init__(self,  deficiencia, beneficiarioCpf, tipoDeficiencia="NULL", nCredencial="NULL", dataEmissao="NULL", dataValidade="NULL", segundaVia="NULL", terceiraVia="NULL", primeiroRecadastro="NULL",segundoRecadastro="NULL",terceiroRecadastro="NULL", observacoes="NULL",) -> None:
@@ -23,6 +24,11 @@ class Deficiente:
     def listAll():
         lista = pd.read_sql_query(
             'SELECT * FROM {0} '.format(tabDeficiente), conn)
+        return lista
+    
+    def listAllConcluidos():
+        lista = pd.read_sql_query(
+            'SELECT * FROM {0} as DF RIGHT JOIN {1} as PT on  DF.beneficiarios_cpf = PT.beneficiarios_cpf WHERE PT.status=\'Finalizado\' AND PT.tipo=\'Deficiente\''.format(tabDeficiente, tabProtocolo), conn)
         return lista
 
     def add(self):
@@ -65,12 +71,14 @@ class Deficiente:
     def selectByCpf(cpf):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  beneficiarios_cpf={1}".format(tabDeficiente, cpf), conn)
-        return selecao
+        deficiente = Deficiente.convertSelect(selecao)
+        return deficiente
     
     def selectByNCredencial(nCredencial):
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} WHERE  n_credencial={1}".format(tabDeficiente, nCredencial), conn)
-        return selecao
+        deficiente = Deficiente.convertSelect(selecao)
+        return deficiente
 
     def updateByCpf(self):
 
@@ -115,4 +123,17 @@ class Deficiente:
             "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabDeficiente, cpf), conn)
         return selecao
     
-    
+    def setData(cpf, dataValidade, dataEmissao):
+        conn.execute(
+            'UPDATE {0} SET  data_validade=\'{1}\', data_emissao=\'{2}\' WHERE beneficiarios_cpf={3}'.format(
+                tabDeficiente, dataValidade, dataEmissao, cpf))
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabDeficiente, cpf), conn)
+        deficiente = Deficiente.convertSelect(selecao)
+        return deficiente
+
+    def convertSelect(selecao):
+        deficiente = Deficiente(selecao['deficiencia'][0], selecao['beneficiarios_cpf'][0], selecao['tipo_deficiencia'][0], selecao['n_credencial'][0], selecao['data_emissao'][0], selecao['data_validade'][0], selecao['segunda_via'][0], selecao['terceira_via'][0], selecao['primeiro_recadastro'][0], selecao['segundo_recadastro'][0],
+                                    selecao['terceiro_recadastro'][0], selecao['observacoes'][0])
+        return deficiente
+  

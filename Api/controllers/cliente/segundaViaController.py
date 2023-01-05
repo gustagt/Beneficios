@@ -10,36 +10,33 @@ class SegundaViaController:
     def segundaViaGET():
         return render_template('cliente/segundaVia.html')
     
-    def segundaViaPOST(request: request):
+    def segundaViaPOST():
         nCredencial = request.form['nCredencial']
         cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
         tpCredencial = request.form['tpCredencial']
 
-        if tpCredencial.lower() == 'deficiente':
-            credencial = df.selectByCpf(cpf)
-            if not (credencial.empty):
-                nCredencialResp = credencial['n_credencial'].values[0]
+        try:
+            if tpCredencial.lower() == 'deficiente':
+                credencial = df.selectByCpf(cpf)
                 beneficiario = bn.selectByCpf(cpf)
                 nome = beneficiario.nome
-                if nCredencialResp == int(nCredencial):
-                    resposta = make_response(render_template('cliente/solicitarBoleto.html', nCredencial=nCredencialResp, cpf=cpf, nome=nome), 200)
+                if credencial.nCredencial == int(nCredencial):
+                    resposta = make_response(render_template('cliente/solicitarBoleto.html', nCredencial=credencial.nCredencial, cpf=cpf, nome=nome), 200)
                     resposta.set_cookie("cpf", cpf)
                     resposta.set_cookie('tpCredencial', tpCredencial)
                     resposta.set_cookie('nCredencial', nCredencial)
                     return resposta
 
-        elif tpCredencial.lower() == 'idoso':
-            credencial = id.selectByCpf(cpf)
-            if not (credencial.empty):
-                nCredencialResp = credencial['n_credencial'].values[0]
+            elif tpCredencial.lower() == 'idoso':
+                credencial = id.selectByCpf(cpf)
                 beneficiario = bn.selectByCpf(cpf)
                 nome = beneficiario.nome
-                if nCredencialResp == int(nCredencial):
-                    resposta = make_response(render_template('cliente/solicitarBoleto.html', nCredencial=nCredencialResp, cpf=cpf, nome=nome),200)
+                if credencial.nCredencial == int(nCredencial):
+                    resposta = make_response(render_template('cliente/solicitarBoleto.html', nCredencial=credencial.nCredencial, cpf=cpf, nome=nome),200)
                     resposta.set_cookie("cpf", cpf)
                     resposta.set_cookie('tpCredencial', tpCredencial)
                     resposta.set_cookie('nCredencial', nCredencial)
                     return resposta
                 
-
-        return render_template('cliente/erro.html', mensagem=e.Erros.consulta.value), 400
+        except:
+            return render_template('cliente/erro.html', mensagem=e.Erros.consulta.value), 400
