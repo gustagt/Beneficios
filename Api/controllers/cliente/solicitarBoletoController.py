@@ -42,7 +42,7 @@ class SolicitarBoletoController:
                 beneficiario = bn.selectByCpf(cpf)
                 if credencial.nCredencial == int(nCredencial):
                     protocolo = pt(
-                        beneficiario.cpf, 'Em Analise', "Segunda via - Deficiente", dataAtual, 'Boleto').add()
+                        beneficiario.cpf, 'Não Pago', "Segunda via - Deficiente", dataAtual, 'Boleto').add()
                     SolicitarBoletoController.creatCodigoBarra(
                         beneficiario, protocolo)
                     file = path / 'static' / 'boletos' / \
@@ -55,7 +55,7 @@ class SolicitarBoletoController:
                 beneficiario = bn.selectByCpf(cpf)
                 if credencial.nCredencial == int(nCredencial):
                     protocolo = pt(
-                        beneficiario.cpf, 'Em Analise', "Segunda via - Idoso", dataAtual, 'Boleto').add()
+                        beneficiario.cpf, 'Não Pago', "Segunda via - Idoso", dataAtual, 'Boleto').add()
                     SolicitarBoletoController.creatCodigoBarra(
                         beneficiario, protocolo)
                     file = path / 'static' / 'boletos' / \

@@ -22,10 +22,7 @@ class FormularioDeficienteController:
     def formularioDeficientePOST():
         cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
 
-        duplicidade = df.selectByCpf(cpf)
-
-        if duplicidade.empty:
-
+        try:
             nome = request.form['nome']
             dataNascimento = request.form['dataNascimento']
             celular = re.sub("[^0-9]", "",str(request.form['celular']))
@@ -56,7 +53,7 @@ class FormularioDeficienteController:
                 cpf, nome, dataNascimento, rua, bairro, num, cidade, cep, celular, rg, email, genero, caminho.as_posix())
             credencialD = df(deficiencia, cpf)
             protocolo = pt(
-                cpf, 'Em analise', 'Solicitação para Credencial', dataAtual,'Deficiente')
+                cpf, 'Em Analise', 'Solicitação para Credencial', dataAtual,'Deficiente')
 
             cpResidencia.save(os.path.join(
                 caminho, secure_filename('comprovante_residencia' + os.path.splitext(cpResidencia.filename)[1])))
@@ -88,5 +85,5 @@ class FormularioDeficienteController:
             
             return cs.renderConsula(rProtocolo.nProtocolo), 200
 
-        else:
+        except:
             return render_template('cliente/erro.html', mensagem=e.Erros.formularioDeficiente.value), 400

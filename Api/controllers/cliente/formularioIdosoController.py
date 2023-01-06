@@ -22,9 +22,6 @@ class FormularioIdosoController:
     def formularioIdosoPOST():
         cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
 
-        
-       
-
         try:
             nome = request.form['nome']
             dataNascimento = request.form['dataNascimento']
@@ -57,7 +54,7 @@ class FormularioIdosoController:
                 cpf, nome, dataNascimento, rua, bairro, num, cidade, cep, celular, rg, email, genero, caminho.as_posix())
             credencialD = id(cpf)
             protocolo = pt(
-                cpf, 'Em analise', 'Solicitação para Credencial', dataAtual, 'Idoso')
+                cpf, 'Em Analise', 'Solicitação para Credencial', dataAtual, 'Idoso')
 
             cpResidencia.save(os.path.join(
                 caminho, secure_filename('comprovante_residencia' + os.path.splitext(cpResidencia.filename)[1])))

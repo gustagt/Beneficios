@@ -77,11 +77,12 @@ class OpcoesController:
             if protocolo.tipo == 'Idoso':
                 credencial = id.setData(beneficiario.cpf, dataValidade, dataEmissao)
             if protocolo.tipo == 'Deficiente':
-                pass
-                # credencial = df.setData(beneficiario.cpf, dataValidade, dataEmissao)
+                tipoDeficiencia = request.form['tipoDeficiencia']
+                credencial = df.setDados(beneficiario.cpf, dataValidade, dataEmissao, tipoDeficiencia)
             OpcoesController.gerarCredencial(protocolo, beneficiario, credencial)
             file = path / 'documentos' / str(beneficiario.cpf) / \
                 '{0}.pdf'.format(protocolo.nProtocolo)
+            pt.setStatus('Em Produção', protocolo.nProtocolo)
             return send_file(file)
 
         # if request.form['valor'] == 'pendente':
@@ -90,7 +91,13 @@ class OpcoesController:
 
     def gerarCredencial(protocolo: pt, beneficiario: bn, credencial):
 
-        if protocolo.tipo == 'Idoso' or str(protocolo.servico).replace(' ', '').split('-')[1] == 'Idoso':
+        if protocolo.tipo == 'Idoso':
+            OpcoesController.credencialIdoso(credencial,protocolo, beneficiario)
+            
+        elif protocolo.tipo == 'Deficiente':
+            OpcoesController.credencialDeficiente(credencial,protocolo, beneficiario)
+        
+        elif str(protocolo.servico).replace(' ', '').split('-')[1] == 'Idoso':
             OpcoesController.credencialIdoso(credencial,protocolo, beneficiario)
             
         else:
