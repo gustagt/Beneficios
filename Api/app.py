@@ -75,7 +75,9 @@ def documentos(tipoDocumento):
             if tipoDocumento == 'laudo_perificial':
                 if nomeArquivo == 'laudo_perificial'+ extensao:
                     return send_file(enderecoArquivo)
-                
+            if tipoDocumento == 'AR':
+                if nomeArquivo == 'AR'+ extensao:
+                    return send_file(enderecoArquivo)
     return render_template('cliente/erro.html')
 
 # Navegação
@@ -99,9 +101,39 @@ def opcoes():
         return dsboard.dashboardLoginPOST(app.secret_key)
     
 @app.route("/opcoes/protocolo", methods=["POST", "GET"])
-def opcoesCredencial():
+def opcoesProtocolo():
     if request.method == 'POST':
         return op.opcoesCredencialPOST()
+    
+@app.route("/opcoes/credencial", methods=["POST", "GET"])
+def opcoesCredencial():
+    if request.method == 'GET':
+        return op.opcoesCredencialGET()
+    
+@app.route("/opcoes/protocolo/credencial", methods=["POST", "GET"])
+def opcoesCredencialProtocolo():
+    if request.method == 'GET':
+        return op.opcoesProtocoloGET()
+    
+@app.route("/opcoes/salvarAR", methods=["POST", "GET"])
+def opcoesSalvarAR():
+    if request.method == 'POST':
+        return op.opcoesSalvarARPOST()
+    
+@app.route("/opcoes/anexarAR", methods=["POST", "GET"])
+def opcoesAnexarAR():
+    if request.method == 'POST':
+        return op.opcoesAnexarARPOST()
+    
+@app.route("/opcoes/pendente", methods=["POST", "GET"])
+def opcoesPendente():
+    if request.method == 'POST':
+        return op.opcoesPendentePOST()
+    
+@app.route("/opcoes/indeferir", methods=["POST", "GET"])
+def opcoesIndeferir():
+    if request.method == 'POST':
+        return op.opcoesIndeferirPOST()
 
 
 # credenciais
@@ -211,6 +243,4 @@ def FormularioIdoso():
     if request.method == "POST":
         return fi.formularioIdosoPOST()
 
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+if __name__ == '__main__':    app.run(host='0.0.0.0', debug=True)

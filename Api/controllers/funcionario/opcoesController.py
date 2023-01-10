@@ -1,4 +1,4 @@
-from flask import request, render_template, session, send_file
+from flask import request, render_template, session, send_file, redirect
 from models.protocolo import Protocolo as pt
 from models.beneficiario import Beneficiario as bn
 from models.idoso import Idoso as id
@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import time
 from datetime import date
+from werkzeug.utils import secure_filename
 
 from reportlab.pdfgen.canvas import Canvas
 from PIL import Image,  ImageDraw, ImageFont
@@ -23,7 +24,7 @@ ptc = 'Protocolo'
 crd = 'Credencial'
 
 path = Path().absolute()
-dataEmissao = date.today()
+data = date.today()
 
 
 class OpcoesController:
@@ -58,36 +59,153 @@ class OpcoesController:
         numero = request.cookies.get("numero")
         tipo = session['tipoCredencial']
 
+        
+
         if tipo == "idoso":
             credencial = id.selectByNCredencial(numero)
             beneficiario = bn.selectByCpf(credencial.beneficiarioCpf)
+            session['cpf'] = str(credencial.beneficiarioCpf)
             return render_template('funcionario/credenciais.html', subtitulo=crd, numero=numero, credencial=credencial, beneficiario=beneficiario, tipo=tipo)
 
         if tipo == "deficiente":
             credencial = df.selectByNCredencial(numero)
             beneficiario = bn.selectByCpf(credencial.beneficiarioCpf)
+            session['cpf'] = str(credencial.beneficiarioCpf)
             return render_template('funcionario/credenciais.html', subtitulo=crd, numero=numero, credencial=credencial, beneficiario=beneficiario, tipo=tipo)
+    
+    def opcoesSalvarARPOST():
+        ar = request.form['ar']
+        nProtocolo = request.cookies.get("numero") 
+        
+        status = 'Enviado'
+        pt.setAR(ar, nProtocolo)
+        pt.setStatus(status, nProtocolo)
+        
+        return redirect('/opcoes')
+    
+    def opcoesAnexarARPOST():
+        ar = request.files['arFile']
+        nProtocolo = request.cookies.get("numero") 
+        
+        status = 'Finalizado'
+        pt.setDataEntrega(data, nProtocolo)
+        protocolo = pt.setStatus(status, nProtocolo)
+        
+        
+        caminho = path / 'documentos' / str(protocolo.beneficiarioCpf)
+        
+        ar.save(os.path.join(
+                caminho.__str__(), secure_filename('AR' + os.path.splitext(ar.filename)[1])))
+
+        return redirect('/opcoes')
+        
+        
+    def opcoesProtocoloGET():
+        nProtocolo = request.cookies.get("numero")
+
+        protocolo = pt.selectByNProtocolo(nProtocolo)
+        
+        beneficiario = bn.selectByCpf(protocolo.beneficiarioCpf)
+        
+        if protocolo.tipo == 'Idoso':
+            credencial = id.selectByCpf(beneficiario.cpf)
+            file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-ido.pdf'.format(credencial.nCredencial)
+        elif protocolo.tipo == 'Deficiente':
+            credencial = df.selectByCpf(beneficiario.cpf)
+            file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-def.pdf'.format(credencial.nCredencial)
+        elif str(protocolo.servico).replace(' ', '').split('-')[1] == 'Idoso':
+            credencial = id.selectByCpf(beneficiario.cpf)
+            file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-ido.pdf'.format(credencial.nCredencial)
+        else:
+            credencial = df.selectByCpf(beneficiario.cpf)
+            file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-def.pdf'.format(credencial.nCredencial)
+        return send_file(file)
+
+    def opcoesCredencialGET():
+        nCredencial = request.cookies.get("numero")
+        tipo = request.cookies.get("tpCredencial")
+
+        if tipo == 'idoso':
+            credencial = id.selectByNCredencial(nCredencial)
+            file = path / 'documentos' / str(credencial.beneficiarioCpf) / \
+                '{0}-ido.pdf'.format(credencial.nCredencial)
+        elif tipo == 'deficiente':
+            credencial = df.selectByNCredencial(nCredencial)
+            file = path / 'documentos' / str(credencial.beneficiarioCpf) / \
+                '{0}-def.pdf'.format(credencial.nCredencial)
+
+        return send_file(file)
 
     def opcoesCredencialPOST():
-        if request.form['valor'] == 'aprovado':
+        valor = request.form['valor']
+        nomeUsuario = session['nomeUsuario']
+        if valor == 'aprovado':
             dataValidade = request.form['dataValidade']
             nProtocolo = request.cookies.get("numero")
             protocolo = pt.selectByNProtocolo(nProtocolo)
             beneficiario = bn.selectByCpf(protocolo.beneficiarioCpf)
             if protocolo.tipo == 'Idoso':
-                credencial = id.setData(beneficiario.cpf, dataValidade, dataEmissao)
-            if protocolo.tipo == 'Deficiente':
+                credencial = id.setData(beneficiario.cpf, dataValidade, data)
+                file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-ido.pdf'.format(credencial.nCredencial)
+                
+            elif protocolo.tipo == 'Deficiente':
                 tipoDeficiencia = request.form['tipoDeficiencia']
-                credencial = df.setDados(beneficiario.cpf, dataValidade, dataEmissao, tipoDeficiencia)
+                credencial = df.setDados(beneficiario.cpf, dataValidade, data, tipoDeficiencia)
+                file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-def.pdf'.format(credencial.nCredencial)
+            elif str(protocolo.servico).replace(' ', '').split('-')[1] == 'Idoso':
+                credencial = id.setData(beneficiario.cpf, dataValidade, data)
+                file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-ido.pdf'.format(credencial.nCredencial)
+            else:
+                credencial = df.setDados(beneficiario.cpf, dataValidade, data)
+                file = path / 'documentos' / str(beneficiario.cpf) / \
+                '{0}-def.pdf'.format(credencial.nCredencial)
+                
             OpcoesController.gerarCredencial(protocolo, beneficiario, credencial)
-            file = path / 'documentos' / str(beneficiario.cpf) / \
-                '{0}.pdf'.format(protocolo.nProtocolo)
             pt.setStatus('Em Produção', protocolo.nProtocolo)
             return send_file(file)
 
-        # if request.form['valor'] == 'pendente':
+        if valor == 'pendente':
+            nProtocolo = request.cookies.get("numero")
+            protocolo = pt.selectByNProtocolo(nProtocolo)
+            
+            return render_template("funcionario/feedback.html", protocolo=protocolo, nProtocolo=nProtocolo, valor=valor, nomeUsuario=nomeUsuario) 
 
-        # if request.form['valor'] == 'indeferido':
+        if valor == 'indeferir':
+            nProtocolo = request.cookies.get("numero")
+            protocolo = pt.selectByNProtocolo(nProtocolo)
+            return render_template("funcionario/feedback.html", protocolo=protocolo, nProtocolo=nProtocolo, valor=valor, nomeUsuario=nomeUsuario) 
+        
+    def opcoesPendentePOST():
+        nProtocolo = request.cookies.get("numero")
+
+        pt.setStatus("Pendente", nProtocolo)
+        # email
+        # //
+        # //
+        return redirect('/protocolos')   
+     
+    def opcoesIndeferirPOST():
+        nProtocolo = request.cookies.get("numero")
+        protocolo = pt.setStatus("Indeferido", nProtocolo)
+        if protocolo.tipo == 'Deficiente':
+            df.deleteByCpf(protocolo.beneficiarioCpf)
+        elif protocolo.tipo == 'Idoso':
+            id.deleteByCpf(protocolo.beneficiarioCpf)
+            
+        # email
+        # //
+        # //
+        
+        return redirect('/protocolos')    
+        
+    # credencial
 
     def gerarCredencial(protocolo: pt, beneficiario: bn, credencial):
 
@@ -103,21 +221,35 @@ class OpcoesController:
         else:
             OpcoesController.credencialDeficiente(credencial,protocolo, beneficiario)
             
-        OpcoesController.pdfCredencial(protocolo, beneficiario.cpf)
+        OpcoesController.pdfCredencial(protocolo, credencial)
         # delay para fechar e excluir os arquivos
         time.sleep(1)
         if os.path.exists(path / 'documentos' / 'templatesDocumentos' / '{0}.jpg'.format(protocolo.nProtocolo)):
             os.remove(path / 'documentos' / 'templatesDocumentos' /
                       '{0}.jpg'.format(protocolo.nProtocolo))
 
-    def pdfCredencial(protocolo : pt, cpf):
+    def pdfCredencial(protocolo : pt, credencial):
         # Open the image
         im = Image.open(path / 'documentos' /
                          'templatesDocumentos' / "{0}.jpg".format(protocolo.nProtocolo))
 
         # Create a PDF with the same size as the image
-        pdf = Canvas((path / 'documentos' /
-                         str(cpf) / "{0}.pdf".format(protocolo.nProtocolo)).__str__(), pagesize=im.size)
+        if protocolo.tipo == 'Idoso':
+            pdf = Canvas((path / 'documentos' /
+                         str(credencial.beneficiarioCpf) / "{0}-ido.pdf".format(credencial.nCredencial)).__str__(), pagesize=im.size)
+            
+        elif protocolo.tipo == 'Deficiente':
+            pdf = Canvas((path / 'documentos' /
+                         str(credencial.beneficiarioCpf) / "{0}-def.pdf".format(credencial.nCredencial)).__str__(), pagesize=im.size)
+        
+        elif str(protocolo.servico).replace(' ', '').split('-')[1] == 'Idoso':
+            pdf = Canvas((path / 'documentos' /
+                         str(credencial.beneficiarioCpf) / "{0}-ido.pdf".format(credencial.nCredencial)).__str__(), pagesize=im.size)
+            
+        else:
+            pdf = Canvas((path / 'documentos' /
+                         str(credencial.beneficiarioCpf) / "{0}-def.pdf".format(credencial.nCredencial)).__str__(), pagesize=im.size)
+
 
         # Draw the image on the PDF
         pdf.drawImage(path / 'documentos' /

@@ -20,9 +20,10 @@ class FormularioIdosoController:
         return render_template('cliente/fCredencialIdoso.html'), 200
     
     def formularioIdosoPOST():
-        cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
-
+        
         try:
+            cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
+            
             nome = request.form['nome']
             dataNascimento = request.form['dataNascimento']
             celular = re.sub("[^0-9]", "",str(request.form['celular']))
@@ -48,7 +49,16 @@ class FormularioIdosoController:
 
             caminho = caminhoDocumentos / 'documentos' / cpf
 
-            os.mkdir(caminho)
+            try:
+                validaBene = bn.selectByCpf(cpf)
+                try:
+                    id.selectByCpf(cpf)
+                    return render_template('cliente/erro.html', mensagem=e.Erros.formularioIdoso.value), 400
+                except:
+                    pass
+                
+            except:                
+                os.mkdir(caminho)
 
             beneficiario = bn(
                 cpf, nome, dataNascimento, rua, bairro, num, cidade, cep, celular, rg, email, genero, caminho.as_posix())
@@ -79,7 +89,14 @@ class FormularioIdosoController:
                 else:
                     return render_template('cliente/erro.html', mensagem=e.Erros.email.value), 400
             else:
-                beneficiario.updateByCpf()
+                if validaBene.email == email:
+                    beneficiario.updateByCpf()
+                else:
+                    if bn.emailDisponivel(email):
+                        beneficiario.updateByCpf()
+                    else:
+                        return render_template('cliente/erro.html', mensagem=e.Erros.email.value), 400
+                
 
             rProtocolo = protocolo.add()
             credencialD.add()

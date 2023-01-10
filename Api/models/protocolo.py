@@ -107,6 +107,7 @@ class Protocolo:
             "SELECT * FROM {0} WHERE  beneficiarios_cpf={1}".format(tabProtocolo, cpf), conn)
         return selecao
     
+    # sets
     def setStatus(status, nProtocolo):
         conn.execute(
             'UPDATE {0} SET status=\'{1}\' WHERE n_protocolo={2}'.format(
@@ -115,7 +116,26 @@ class Protocolo:
             "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
         protocolo = Protocolo.convertSelect(selecao)
         return protocolo
-
+    
+    def setAR(ar, nProtocolo):
+        conn.execute(
+            'UPDATE {0} SET ar=\'{1}\' WHERE n_protocolo={2}'.format(
+                tabProtocolo, ar, nProtocolo))
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
+        protocolo = Protocolo.convertSelect(selecao)
+        return protocolo
+    
+    def setDataEntrega(data, nProtocolo):
+        conn.execute(
+            'UPDATE {0} SET data_entregue=\'{1}\' WHERE n_protocolo={2}'.format(
+                tabProtocolo, data, nProtocolo))
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} where n_protocolo={1}".format(tabProtocolo, nProtocolo), conn)
+        protocolo = Protocolo.convertSelect(selecao)
+        return protocolo
+    
+    # convert
     def convertSelect(selecao):
         protocolo = Protocolo(selecao['beneficiarios_cpf'].iloc[-1], selecao['status'].iloc[-1],
                               selecao['servico'].iloc[-1], selecao['data_analise'].iloc[-1], selecao['tipo'].iloc[-1], selecao['n_protocolo'].iloc[-1],

@@ -91,6 +91,16 @@ class Beneficiario:
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where cpf={1}".format(tabBeneficiarios, cpf), conn)
         return selecao
+    
+    def credencialId(cpf):
+        selecao = pd.read_sql_query(
+            "SELECT MAX(n_protocolo) FROM tabela where beneficiarios_cpf = {1} and ".format(tabBeneficiarios, cpf), conn)
+        
+        return selecao
+    def credencialDf(cpf):
+        selecao = pd.read_sql_query(
+            "SELECT * FROM {0} where  id = (SELECT MAX(id) FROM tabela)".format(tabBeneficiarios, cpf), conn)
+        return selecao
 
     def convertSelect(selecao):
         beneficiario = Beneficiario(selecao['cpf'][0], selecao['nome'][0], selecao['data_nascimento'][0], selecao['rua'][0], selecao['bairro'][0], selecao['num_complemento'][0], selecao['cidade'][0], selecao['cep'][0],

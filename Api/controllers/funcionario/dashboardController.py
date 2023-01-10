@@ -1,4 +1,4 @@
-from flask import request, render_template, session
+from flask import request, render_template, session, redirect
 from models.protocolo import Protocolo as pt
 from models.beneficiario import Beneficiario as bn
 from models.idoso import Idoso as id
@@ -46,15 +46,13 @@ class DashboardController:
                 matricula = str(p[0].userPrincipalName).split('@')[0]
 
                 if usuario == matricula:
-                    lista = pt.listAll()
-                    beneficiarios = bn.listAll().set_index('cpf')
                     nome2 = str(name).replace(',', ' ')
                     nome = str(name).split()[0][3:]
                     nome = nome + ' ' + str(nome2).split()[1]
                     session['nomeUsuario'] = nome
                     session['token'] = hp.auth(key)
-                    return render_template("funcionario/dashboard.html", subtitulo='Protocolos', lista=lista, linhas=len(lista), beneficiarios=beneficiarios, nomeUsuario=nome, servico=ptc), 200
 
+                    return redirect('/protocolos')
             conn.unbind()
 
         return render_template('cliente/erro.html', mensagem=e.Erros.consulta.value), 400

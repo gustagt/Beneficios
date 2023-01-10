@@ -123,9 +123,11 @@ class Deficiente:
             "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabDeficiente, cpf), conn)
         return selecao
     
-    def setDados(cpf, dataValidade, dataEmissao, tipoDeficiencia):
+    def setDados(cpf, dataValidade, dataEmissao, tipoDeficiencia = 'NULL'):
+        if tipoDeficiencia != "NULL":
+            tipoDeficiencia = '\''+tipoDeficiencia+"\'"
         conn.execute(
-            'UPDATE {0} SET  data_validade=\'{1}\', data_emissao=\'{2}\', tipo_deficiencia=\'{3}\' WHERE beneficiarios_cpf={4}'.format(
+            'UPDATE {0} SET  data_validade=\'{1}\', data_emissao=\'{2}\', tipo_deficiencia={3} WHERE beneficiarios_cpf={4}'.format(
                 tabDeficiente, dataValidade, dataEmissao, tipoDeficiencia, cpf))
         selecao = pd.read_sql_query(
             "SELECT * FROM {0} where beneficiarios_cpf={1}".format(tabDeficiente, cpf), conn)

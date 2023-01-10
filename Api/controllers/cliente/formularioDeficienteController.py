@@ -19,10 +19,10 @@ class FormularioDeficienteController:
     def formularioDeficienteGET():
         return render_template('cliente/fCredencialDeficiente.html'), 200
     
-    def formularioDeficientePOST():
-        cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
+    def formularioDeficientePOST():      
+        try:          
+            cpf = re.sub("[^0-9]", "",str(request.form['cpf']))
 
-        try:
             nome = request.form['nome']
             dataNascimento = request.form['dataNascimento']
             celular = re.sub("[^0-9]", "",str(request.form['celular']))
@@ -46,8 +46,17 @@ class FormularioDeficienteController:
             dcOfFoto = request.files['dcOfFoto']
 
             caminho = caminhoDocumentos / 'documentos' / cpf
-
-            os.mkdir(caminho)
+            
+            try:
+                validaBene = bn.selectByCpf(cpf)
+                try:
+                    df.selectByCpf(cpf)
+                    return render_template('cliente/erro.html', mensagem=e.Erros.formularioDeficiente.value), 400
+                except:
+                    pass
+                
+            except:                
+                os.mkdir(caminho)
 
             beneficiario = bn(
                 cpf, nome, dataNascimento, rua, bairro, num, cidade, cep, celular, rg, email, genero, caminho.as_posix())
@@ -71,15 +80,22 @@ class FormularioDeficienteController:
                 dResponsavel.save(os.path.join(
                     caminho, secure_filename('representante_legal' + os.path.splitext(dResponsavel.filename)[1])))
                 beneficiario.repLegal = nResponsavel
-
+           
             if bn.ValidarBeneficiario(cpf).empty:
                 if bn.emailDisponivel(email):
                     beneficiario.add()
                 else:
                     return render_template('cliente/erro.html', mensagem=e.Erros.email.value), 400
             else:
-                beneficiario.updateByCpf()
-
+                if validaBene.email == email:
+                    beneficiario.updateByCpf()
+                else:
+                    if bn.emailDisponivel(email):
+                        beneficiario.updateByCpf()
+                    else:
+                        return render_template('cliente/erro.html', mensagem=e.Erros.email.value), 400
+                
+                
             credencialD.add()
             rProtocolo = protocolo.add()
             
@@ -87,3 +103,4 @@ class FormularioDeficienteController:
 
         except:
             return render_template('cliente/erro.html', mensagem=e.Erros.formularioDeficiente.value), 400
+        
